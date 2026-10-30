@@ -1,0 +1,15 @@
+# Keep the test data and scripts byte-identical on every platform.
+# Without this, a Windows checkout converts LF to CRLF, which changes the
+# bytes the test script reads and makes a true cross-platform comparison
+# impossible.
+* text=auto eol=lf
+
+*.py   text eol=lf
+*.csv  text eol=lf
+*.yml  text eol=lf
+*.html text eol=lf
+*.css  text eol=lf
+*.js   text eol=lf
+*.md   text eol=lf
+
+*.png  binary

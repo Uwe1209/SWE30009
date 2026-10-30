@@ -1,0 +1,129 @@
+# =============================================================================
+#  SWE30009 Project - Extension Task 2
+#  The same Selenium suite as test-ubuntu.yml, run on Windows.
+#
+#  Trigger : manual only (workflow_dispatch)
+#  Runner  : windows-latest
+#  Timeout : 30 minutes
+#
+#  The test script, the test data and the application are identical to the
+#  Ubuntu workflow. Only the setup steps differ, and every difference is
+#  commented below so the two files can be read side by side.
+# =============================================================================
+
+name: Selenium Tests (Windows)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  selenium-windows:
+    name: Functional tests on windows-latest
+    runs-on: windows-latest
+    timeout-minutes: 30
+
+    defaults:
+      run:
+        # Windows runners default to Windows PowerShell 5.1. Pinning pwsh
+        # (PowerShell 7) keeps the syntax predictable and cross-version safe.
+        shell: pwsh
+
+    env:
+      # Windows Python can default to a legacy code page for console output.
+      # Forcing UTF-8 keeps the console log and the generated report identical
+      # to the Ubuntu run, which matters when the two are compared.
+      PYTHONIOENCODING: utf-8
+
+    steps:
+      # -- 1. Bring the repository onto the runner -----------------------------
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      # -- 2. Python -----------------------------------------------------------
+      #    Same pinned version as the Ubuntu workflow, so any difference in
+      #    results is attributable to the operating system and not to Python.
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: requirements.txt
+
+      # -- 3. Dependencies -----------------------------------------------------
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip list
+
+      # -- 4. Browser and WebDriver -------------------------------------------
+      #    Chrome is preinstalled on windows-latest as well, and Selenium
+      #    Manager resolves chromedriver the same way it does on Linux. The
+      #    identical check script runs on both platforms.
+      - name: Verify Chrome and chromedriver
+        run: python tests/check_browser.py
+
+      # -- 5. Web server -------------------------------------------------------
+      #    This is the one genuinely OS-specific step. PowerShell has no
+      #    equivalent of the bash trailing "&", so the server is launched as a
+      #    detached process with Start-Process, and readiness is polled with
+      #    Invoke-WebRequest instead of curl.
+      - name: Start the local web server
+        run: |
+          Start-Process -FilePath "python" -ArgumentList "-m","http.server","8000","--directory","app" -WindowStyle Hidden
+          $up = $false
+          foreach ($i in 1..20) {
+            try {
+              Invoke-WebRequest -Uri "http://localhost:8000/index.html" -UseBasicParsing -TimeoutSec 2 | Out-Null
+              $up = $true
+              Write-Host "Server responded after $i second(s)."
+              break
+            } catch {
+              Start-Sleep -Seconds 1
+            }
+          }
+          if (-not $up) {
+            Write-Error "The web server did not come up within 20 seconds."
+            exit 1
+          }
+
+      # -- 6. The test suite ---------------------------------------------------
+      #    PowerShell uses a backtick for line continuation rather than a
+      #    backslash, which is the second OS-specific difference in this file.
+      - name: Run Selenium test suite
+        id: tests
+        continue-on-error: true
+        run: |
+          python tests/test_gateway.py `
+            --url http://localhost:8000/index.html `
+            --csv tests/test_cases.csv `
+            --headless
+
+      # -- 7. Report (Extension Task 3) ---------------------------------------
+      - name: Generate HTML test report
+        if: always()
+        run: python tests/generate_report.py --platform "windows-latest"
+
+      - name: Publish summary to the run page
+        if: always()
+        # $GITHUB_STEP_SUMMARY is read as $env:GITHUB_STEP_SUMMARY in PowerShell.
+        run: Get-Content summary.md | Add-Content -Path $env:GITHUB_STEP_SUMMARY
+
+      - name: Upload test report and evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report-windows
+          path: |
+            test-report.html
+            test_results.csv
+            screenshots/
+          if-no-files-found: warn
+          retention-days: 30
+
+      # -- 8. Final status -----------------------------------------------------
+      - name: Fail the job if any test failed
+        if: steps.tests.outcome == 'failure'
+        run: |
+          Write-Host "One or more test cases failed. See the test-report-windows artifact."
+          exit 1

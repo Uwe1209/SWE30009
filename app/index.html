@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LLM AI Gateway - Usage Dashboard</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="brand">
+      <div class="brand-mark">AI</div>
+      <div>
+        <h1>LLM AI Gateway</h1>
+        <p class="tagline">Monthly usage and billing dashboard</p>
+      </div>
+    </div>
+    <div class="billing-period">
+      <span class="label">Billing period</span>
+      <span class="value">October 2026</span>
+    </div>
+  </header>
+
+  <main class="layout">
+
+    <section class="card models-card">
+      <div class="card-head">
+        <h2>Available models</h2>
+        <p class="hint">Enter the total usage for each model in millions of tokens.</p>
+      </div>
+
+      <div class="table-wrap">
+        <table class="model-table">
+          <thead>
+            <tr>
+              <th class="col-model">Model</th>
+              <th class="col-provider">Provider</th>
+              <th class="col-price">Price / 1M tokens</th>
+              <th class="col-usage">Usage (M tokens)</th>
+            </tr>
+          </thead>
+          <tbody id="model-rows"></tbody>
+        </table>
+      </div>
+
+      <div class="controls">
+        <label class="switch-row" for="batch-api">
+          <input type="checkbox" id="batch-api" class="switch-input">
+          <span class="switch-track"><span class="switch-thumb"></span></span>
+          <span class="switch-text">
+            <strong>Batch API</strong>
+            <span class="switch-sub">Apply 50% discount to all model prices</span>
+          </span>
+        </label>
+
+        <div class="button-row">
+          <button type="button" id="reset-btn" class="btn btn-ghost">Reset</button>
+          <button type="button" id="calculate-btn" class="btn btn-primary">Calculate Usage</button>
+        </div>
+      </div>
+
+      <p id="error-message" class="error-message" role="alert" hidden></p>
+    </section>
+
+    <aside class="card summary-card" id="results-panel" aria-live="polite">
+      <div class="card-head">
+        <h2>Billing summary</h2>
+        <p class="hint">Press Calculate Usage to generate the bill.</p>
+      </div>
+
+      <div id="empty-state" class="empty-state">
+        <p>No usage calculated yet.</p>
+      </div>
+
+      <div id="results-body" hidden>
+        <p class="used-line">
+          Models used: <strong id="models-used-count">0</strong>
+        </p>
+
+        <ul class="summary-list" id="summary-list"></ul>
+
+        <dl class="totals">
+          <div class="totals-row">
+            <dt>Subtotal</dt>
+            <dd id="subtotal-amount">RM 0.00</dd>
+          </div>
+          <div class="totals-row">
+            <dt>SST (6%)</dt>
+            <dd id="sst-amount">RM 0.00</dd>
+          </div>
+          <div class="totals-row grand">
+            <dt>Total payable</dt>
+            <dd id="total-amount">RM 0.00</dd>
+          </div>
+        </dl>
+
+        <p class="discount-note" id="discount-note" hidden>
+          Batch API discount of 50% applied to all model prices.
+        </p>
+      </div>
+    </aside>
+
+  </main>
+
+  <footer class="footer">
+    <p>SWE30009 Software Testing and Reliability &middot; Project Report</p>
+  </footer>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

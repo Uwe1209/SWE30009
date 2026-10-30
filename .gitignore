@@ -1,0 +1,12 @@
+# Test run output — regenerated on every run, never committed
+screenshots/
+test_results.csv
+test-report.html
+summary.md
+server.log
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/

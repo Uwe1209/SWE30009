@@ -1,0 +1,437 @@
+/* ============================================================
+   LLM AI Gateway - stylesheet
+   ============================================================ */
+
+:root {
+  --bg:            #f4f5f7;
+  --surface:       #ffffff;
+  --line:          #e2e5ea;
+  --line-strong:   #cdd2da;
+  --ink:           #1c2128;
+  --ink-soft:      #5b6472;
+  --ink-faint:     #8a93a0;
+  --accent:        #1f5fd6;
+  --accent-dark:   #1a4fb4;
+  --accent-wash:   #eaf1fd;
+  --danger:        #b3261e;
+  --danger-wash:   #fdecea;
+  --ok:            #1c7a4a;
+  --radius:        10px;
+  --radius-sm:     6px;
+  --shadow:        0 1px 2px rgba(20, 28, 40, .06),
+                   0 4px 16px rgba(20, 28, 40, .05);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 32px 28px 48px;
+}
+
+/* ---------- masthead ---------- */
+
+.masthead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 20px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-mark {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: .5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.masthead h1 {
+  margin: 0;
+  font-size: 21px;
+  font-weight: 650;
+  letter-spacing: -.2px;
+}
+
+.tagline {
+  margin: 1px 0 0;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+
+.billing-period {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.billing-period .label {
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  color: var(--ink-faint);
+}
+
+.billing-period .value {
+  font-size: 14.5px;
+  font-weight: 600;
+}
+
+/* ---------- layout ---------- */
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(300px, 1fr);
+  gap: 22px;
+  align-items: start;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.card-head {
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.card-head h2 {
+  margin: 0;
+  font-size: 15.5px;
+  font-weight: 650;
+}
+
+.hint {
+  margin: 3px 0 0;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+/* ---------- model table ---------- */
+
+.table-wrap { width: 100%; }
+
+.model-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.model-table th {
+  text-align: left;
+  font-size: 11.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--ink-faint);
+  padding: 11px 20px;
+  background: #fafbfc;
+  border-bottom: 1px solid var(--line);
+}
+
+.model-table td {
+  padding: 11px 20px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+
+.model-table tbody tr:last-child td { border-bottom: none; }
+
+.col-price, .col-usage { text-align: right; }
+.model-table td.price-cell,
+.model-table td.usage-cell { text-align: right; }
+
+.model-name {
+  font-weight: 550;
+  letter-spacing: -.1px;
+}
+
+.provider-badge {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 99px;
+  background: var(--accent-wash);
+  color: var(--accent-dark);
+  font-size: 12px;
+  font-weight: 550;
+  white-space: nowrap;
+}
+
+.price-cell {
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.price-struck {
+  text-decoration: line-through;
+  color: var(--ink-faint);
+  margin-right: 6px;
+}
+
+.usage-input {
+  width: 104px;
+  padding: 7px 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  background: #fff;
+  color: var(--ink);
+}
+
+.usage-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(31, 95, 214, .14);
+}
+
+.usage-input.field-error {
+  border-color: var(--danger);
+  background: var(--danger-wash);
+}
+
+/* ---------- controls ---------- */
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 16px 20px;
+  background: #fafbfc;
+  border-top: 1px solid var(--line);
+}
+
+.switch-row {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.switch-input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.switch-track {
+  width: 42px;
+  height: 24px;
+  flex: 0 0 42px;
+  border-radius: 99px;
+  background: var(--line-strong);
+  position: relative;
+  transition: background .16s ease;
+}
+
+.switch-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .22);
+  transition: transform .16s ease;
+}
+
+.switch-input:checked + .switch-track { background: var(--accent); }
+.switch-input:checked + .switch-track .switch-thumb { transform: translateX(18px); }
+.switch-input:focus-visible + .switch-track {
+  box-shadow: 0 0 0 3px rgba(31, 95, 214, .22);
+}
+
+.switch-text { display: flex; flex-direction: column; line-height: 1.35; }
+.switch-text strong { font-size: 14px; font-weight: 600; }
+.switch-sub { font-size: 12.5px; color: var(--ink-soft); }
+
+.button-row { display: flex; gap: 10px; }
+
+.btn {
+  font: inherit;
+  font-weight: 550;
+  padding: 9px 18px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background .14s ease, border-color .14s ease;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--accent-dark); }
+
+.btn-ghost {
+  background: #fff;
+  border-color: var(--line-strong);
+  color: var(--ink-soft);
+}
+.btn-ghost:hover { border-color: var(--ink-faint); color: var(--ink); }
+
+/* ---------- error ---------- */
+
+.error-message {
+  margin: 0;
+  padding: 11px 20px;
+  background: var(--danger-wash);
+  border-top: 1px solid #f3c9c5;
+  color: var(--danger);
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+/* ---------- summary ---------- */
+
+.empty-state {
+  padding: 32px 20px;
+  text-align: center;
+  color: var(--ink-faint);
+  font-size: 13.5px;
+}
+
+.empty-state p { margin: 0; }
+
+#results-body { padding: 16px 20px 18px; }
+
+.used-line {
+  margin: 0 0 12px;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+
+.used-line strong { color: var(--ink); font-size: 14.5px; }
+
+.summary-list {
+  list-style: none;
+  margin: 0 0 14px;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+
+.summary-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 13.5px;
+}
+
+.summary-list .item-name { color: var(--ink); }
+
+.summary-list .item-meta {
+  display: block;
+  font-size: 12px;
+  color: var(--ink-faint);
+}
+
+.summary-list .item-amount {
+  font-variant-numeric: tabular-nums;
+  font-weight: 550;
+  white-space: nowrap;
+}
+
+.totals { margin: 0; }
+
+.totals-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 0;
+  font-size: 13.5px;
+}
+
+.totals-row dt { color: var(--ink-soft); }
+
+.totals-row dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  font-weight: 550;
+}
+
+.totals-row.grand {
+  margin-top: 8px;
+  padding-top: 12px;
+  border-top: 2px solid var(--ink);
+  font-size: 16px;
+}
+
+.totals-row.grand dt { color: var(--ink); font-weight: 650; }
+.totals-row.grand dd { font-weight: 700; }
+
+.discount-note {
+  margin: 12px 0 0;
+  padding: 8px 11px;
+  border-radius: var(--radius-sm);
+  background: var(--accent-wash);
+  color: var(--accent-dark);
+  font-size: 12.5px;
+}
+
+/* ---------- footer ---------- */
+
+.footer {
+  margin-top: 28px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+
+.footer p {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--ink-faint);
+}
+
+/* ---------- narrow screens ---------- */
+
+@media (max-width: 880px) {
+  .layout { grid-template-columns: 1fr; }
+  .masthead { flex-direction: column; align-items: flex-start; }
+  .billing-period { text-align: left; }
+}

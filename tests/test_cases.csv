@@ -1,0 +1,11 @@
+test_id,description,claude-fable,claude-haiku,gpt6-astra,gpt6-mini,gemini3-pro,gemini3-flash,deepseek-flash,mistral-large,batch_api,expected_models_used,expected_total
+TC01,"Single model, standard pricing",2,0,0,0,0,0,0,0,FALSE,1,27.56
+TC02,"Single model, batch API discount",2,0,0,0,0,0,0,0,TRUE,1,13.78
+TC03,"All 8 models, standard pricing",1,1,1,1,1,1,1,1,FALSE,8,72.08
+TC04,"All 8 models, batch API discount",1,1,1,1,1,1,1,1,TRUE,8,36.04
+TC05,"Three models, uneven usage, standard",0,0,3,0,0,7,0,2,FALSE,3,88.51
+TC06,"Three models, uneven usage, batch",0,5,0,0,3,0,4,0,TRUE,3,43.99
+TC07,Zero usage across all models,0,0,0,0,0,0,0,0,FALSE,0,0.00
+TC08,Very large usage on a single model,0,10000,0,0,0,0,0,0,FALSE,1,42400.00
+TC09,"Minimum non-zero bill, cheapest model",0,0,0,0,0,1,0,0,FALSE,1,1.59
+TC10,Mixed used and unused models,1,0,0,4,0,0,2,0,FALSE,3,33.92
