@@ -1,7 +1,7 @@
 # LLM AI Gateway — Automated Test Suite
 
-[![Selenium Tests (Ubuntu)](https://github.com/Uwe1209/SWE30009.git/actions/workflows/test-ubuntu.yml/badge.svg)](https://github.com/Uwe1209/SWE30009.git/actions/workflows/test-ubuntu.yml)
-[![Selenium Tests (Windows)](https://github.com/Uwe1209/SWE30009.git/actions/workflows/test-windows.yml/badge.svg)](https://github.com/Uwe1209/SWE30009.git/actions/workflows/test-windows.yml)
+[![Selenium Tests (Ubuntu)](https://github.com/Uwe1209/SWE30009/actions/workflows/test-ubuntu.yml/badge.svg)](https://github.com/Uwe1209/SWE30009/actions/workflows/test-ubuntu.yml)
+[![Selenium Tests (Windows)](https://github.com/Uwe1209/SWE30009/actions/workflows/test-windows.yml/badge.svg)](https://github.com/Uwe1209/SWE30009/actions/workflows/test-windows.yml)
 
 SWE30009 Software Testing and Reliability — project submission.
 
